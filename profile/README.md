@@ -78,6 +78,18 @@ We publish only what can be checked; every address in these repositories carries
 - The operator skill: [`cyborgd/skills/cyborgd/SKILL.md`](https://github.com/dddcyborgd/cyborgd/blob/main/skills/cyborgd/SKILL.md).
 - In the DeltaVerse: `docs/CYBORG.md`, `docs/DVAAS.md` (DeltaVerse as a Service), `deploy/cyborg/` (the ceremony and the audit posture), `cyborg/` (the consumer surface).
 
+## Related homes
+
+The organisations this work descends from and feeds — each a piece of the same estate:
+
+| home | what it holds | how cyborg relates |
+|---|---|---|
+| [**deltav-deltaverse**](https://github.com/deltav-deltaverse) | the decentralised cryptoverse metaDAO — NeuralNode, the BubbleRoom lineage, the co-canonical DeltaVerse upstream (126 repos) | `CyborgSpace` links a `BubbleRoomV4` room; the rooms are the zones the aivatars live in |
+| [**cypherpunk4096**](https://github.com/cypherpunk4096) | 2^3 == 8 — the successor posture to cypherpunk2048 (CP2048-OVL-1: the OVERLORD / shadow-OVERSEER standard) | the custody doctrine here: immutable value contracts, an appointed and revocable OVERSEER, every upgrade public |
+| [**DAONOW**](https://github.com/DAONOW) | a collection of inception contracts for DAO creation (151 repos) | the DAIO devolution target: the governance the cyborg suite hands off to |
+| [**poormanvpn**](https://github.com/poormanvpn) | poor man's VPN client + server code | the sovereign network posture the triad assumes — a participant's host can sit behind their own tunnel; the anchor stays reachable |
+| [**AgenticPlace / DeltaVerse**](https://github.com/AgenticPlace/DeltaVerse) | the DeltaVerse itself — the consumer of these three repositories (suite E13, `cyborg/`, `pages/dvaas.html`) | where the gathered lanes are served and where the OVERLORD signs |
+
 ## Inspiration and credit
 
 [oncyber.io](https://oncyber.io) · [docs.oncyber.io](https://docs.oncyber.io) · [github.com/oncyberio](https://github.com/oncyberio):
