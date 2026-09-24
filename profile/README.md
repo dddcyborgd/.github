@@ -4,6 +4,7 @@
 <a href="https://github.com/dddcyborgd/dvengine"><img alt="dvengine" src="https://img.shields.io/badge/dvengine-0.0.2--alpha-9fe9ff?logo=three.js&logoColor=black"></a>
 <a href="https://github.com/dddcyborgd/cyborgd"><img alt="cyborgd" src="https://img.shields.io/badge/cyborgd-0.0.1--alpha-3b6cff?logo=node.js&logoColor=white"></a>
 <a href="https://github.com/dddcyborgd/cyborg-contracts"><img alt="cyborg-contracts" src="https://img.shields.io/badge/cyborg--contracts-0.0.1--alpha-f4d47c?logo=solidity&logoColor=black"></a>
+<a href="https://github.com/dddcyborgd/cyborg-shell"><img alt="cyborg-shell" src="https://img.shields.io/badge/cyborg--shell-0.0.1--alpha-ffb86b?logo=tauri&logoColor=black"></a>
 <a href="LICENSE"><img alt="MIT" src="https://img.shields.io/badge/license-MIT-blue"></a>
 <img alt="tests" src="https://img.shields.io/badge/tests-92%20%C2%B7%2063%20%C2%B7%2045-brightgreen">
 <img alt="dependencies" src="https://img.shields.io/badge/runtime%20deps-zero-black">
@@ -25,12 +26,13 @@ Three ideas hold it together:
 | **The field of influence** | The arcball around a participant becomes a **resizable field**: items of influence (the sceptre, the orb) ride on its surface, the aivatar's arm reaches along it, combinations act on it. It can grow toward the whole space but stays **one unit short of it — infinity − 1** — so it remains a thing the DeltaVerse can recognise. The DeltaVerse **always recognises** it; the OVERLORD hierarchy holds two dials per rung (**outflow**: how much the DeltaVerse is affected, **inflow**: how much the participant is), and a field is open, connected to chosen participants, or private to its signer. |
 | **Privilege is earned, custody is not shared** | login333 is the gate; rungs come from signature, holdings and appointment. Value contracts are immutable (deploy → configure → renounce to zero); the one upgradeable contract is owned by an appointed, revocable OVERSEER with a public lineage. The faucet signs vouchers; the participant redeems from their own wallet. |
 
-## The three repositories
+## The four repositories
 
 | repo | what it is | quick start |
 |---|---|---|
 | [**dvengine**](https://github.com/dddcyborgd/dvengine) | The client engine on three.js: `DVEngine` (component runtime — the 37 awe ports + DeltaVerse-native `substrate` · `portal` · `zone` · `piece` · **`aivatar`** · `thot-memory` · `participant` · `sceptre` · `orb`), `DVScene` (the *cyborg-space/1* document — the scene IS the tokenURI), `DVTransform` (transform tools), the glTF asset desk, `DVStudio`, `DVNet` / `DVPeer` / `DVHost` (the triad client), `DVXR`, `DVVerse`, **`DVField`** (the field of influence), the **input lane** (old-school joystick layouts, the mouse as an arcball extension, the mic and the camera as sticks, chords) and **legacy mode**. | `git clone https://github.com/dddcyborgd/dvengine && cd dvengine && node scripts/vendor-three.mjs && node scripts/serve.mjs` → http://127.0.0.1:8801/ (`/studio/studio.html`, `/legacy/legacy.html`) · `node --test test/*.test.mjs` |
 | [**cyborgd**](https://github.com/dddcyborgd/cyborgd) | The daemon: the DeltaVerse **anchor** of the triad — rendezvous, login333 claims, the canonical snapshot, failover host — the `cyborg/1` protocol with WebRTC signaling, rooms · zones · authoritative sim, the **aivatar** behaviours (greet · mirror · arcball arm-reach · the riddle · answering raised items), **the faucet** (openBDK / LUV / SCIEN·TIFIC drips against EIP-712 vouchers) and the **field policy** dials. Isomorphic core: the same room code runs in a participant's browser as host. Zero npm dependencies. | `git clone https://github.com/dddcyborgd/cyborgd && cd cyborgd && node daemon/cyborgd.mjs` → ws://127.0.0.1:8790/ws · `node daemon/cyborgd.mjs --selftest` · production: `ops/README.md` |
+| [**cyborg-shell**](https://github.com/dddcyborgd/cyborg-shell) | The **client delivery**: a Tauri v2 shell that carries the client to a desktop or a handheld as a native application. One shell, two lanes — the public **app** (the deployer, open CSP) and the wallet-gated **dapp** (`cyborg/index.html`, a real allow-list). Three commands: `deploy_suite` (localnet only, by design), `cyborg_connect` (environment-overridable endpoints), and `sign_challenge`, which **always fails** — the shell holds no keys, and signing is delegated to Parsec Connect or the injected wallet. | `git clone https://github.com/dddcyborgd/cyborg-shell && cd cyborg-shell && cargo check` · `npm install && npm run dapp:dev` (needs a frontend tree around it) |
 | [**cyborg-contracts**](https://github.com/dddcyborgd/cyborg-contracts) | Foundry: `CyborgSpace` (ERC-721 space token, ERC-6551-ready), `CyborgDrop` + `CyborgMultiSender` (the oncyber factory drops, immutable), `CyborgFaucet` (signer-gated pull faucet) — deploy → configure → renounce; and `CyborgSpaceUpgradeable`, the OVERSEER-owned UUPS lane. **Every address is predicted; nothing is deployed or explorer-verified yet.** | `git clone https://github.com/dddcyborgd/cyborg-contracts && cd cyborg-contracts && forge test` |
 
 ## The input map (defaults, all customisable)
@@ -50,6 +52,8 @@ such as `core+up`, `core,core`, `fire:hold` become actions. `DVControls.describe
 ## How the pieces fit
 
 ```
+ cyborg-shell — the delivery (tauri://localhost serves the frontend to its own webview)
+                                  ⇅ ipc: · custom protocol
  participant A (host) ⇄ RTCDataChannel ⇄ participant B (client)      dvengine: DVVerse · DVField · DVNet/DVPeer/DVHost
         ⇅ mirror{tick,snap}                     ⇅ hello · claim · field · item · voucher
               cyborgd — the anchor (identity · vouchers · canonical snapshot · field policy · failover host)
@@ -67,6 +71,8 @@ such as `core+up`, `core,core`, `fire:hold` become actions. `DVControls.describe
 | The daemon recognises a field at its bound and answers a raised sceptre over a live WebSocket | **verified** locally |
 | The E13 suite rehearses on anvil: 15 txids, `owner()==0` on the three immutable contracts, replay refused, the OVERSEER proxy initialised | **verified** locally (DeltaVerse `npm run deploy:cyborg`) |
 | Contract addresses `0x5ace…595e` (Space) · `0xd0D0…93cc` (Drop) · `0xfa0C…f199` (Faucet) | **predicted** by the create3d formula from vanity salts — not deployed, not verified |
+| `cyborg-shell` compiles (`cargo check`, rustc 1.95.0) and both Tauri lanes carry complete window, bundle and CSP blocks | **verified** locally |
+| A desktop bundle, an `.apk` or an `.ipa` from `cyborg-shell`; code signing; auto-update | **not done** — no binary has been bundled from that tree |
 | Public deployment, explorer verification, external audit | **not done** — they wait for the OVERLORD's signature and a review |
 
 We publish only what can be checked; every address in these repositories carries its state next to it.
